@@ -132,24 +132,37 @@
         </div>
         <div class="row mt-10 justify-content-center">
           <div class="col-md-6">
-            <form>
+            <form name="contact-form-portfolio">
               <!-- Name -->
               <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="name" aria-describedby="name" />
+                <input type="text" class="form-control" id="name" aria-describedby="name" name="nama" />
               </div>
               <!-- Email -->
               <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="email" aria-describedby="email" />
+                <input type="email" class="form-control" id="email" aria-describedby="email" name="email" />
               </div>
               <!-- Text Area (message) -->
               <div class="mb-3">
                 <label for="message" class="form-label">Message</label>
-                <textarea class="form-control" id="message" rows="3"></textarea>
+                <textarea class="form-control" id="message" rows="3" name="pesan"></textarea>
               </div>
 
-              <button type="submit" class="btn btn-primary mb-3">Submit</button>
+              <!-- Button Submit -->
+              <button type="submit" class="btn btn-primary btn-submit mb-3">Submit</button>
+
+              <!-- Button Loading (after submit) -->
+              <button class="btn btn-primary btn-loading d-none mb-3" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Loading...</span>
+              </button>
+
+              <!-- Alert (after submit form) -->
+              <div class="alert alert-warning alert-dismissible fade show d-none form-alert" role="alert">
+                <strong>Thanks!</strong> Your message have been send and soon will be replied via email.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
             </form>
           </div>
         </div>
@@ -184,6 +197,36 @@
             this.classList.add("active");
           });
         });
+      });
+    </script>
+
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbwrpr0pwf01K2IXzAmZgZZtU8_yu4cVylGlLyr2H8ISrz1vCX2vLpRD5BBi17lQGSFh/exec";
+      const form = document.forms["contact-form-portfolio"];
+      const btnSubmit = document.querySelector(".btn-submit");
+      const btnLoading = document.querySelector(".btn-loading");
+      const formAlert = document.querySelector(".form-alert");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Ketika tombol submit di-klik
+        // Hilangkan tombol submit, tampilkan tombol loading
+        btnSubmit.classList.toggle("d-none");
+        btnLoading.classList.toggle("d-none");
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            // Tampilkan tombol submit, hilangkan tombol loading
+            btnSubmit.classList.toggle("d-none");
+            btnLoading.classList.toggle("d-none");
+
+            // Tampilkan Alert
+            formAlert.classList.toggle("d-none");
+
+            // Reset Form
+            form.reset();
+            console.log("Success!", response);
+          })
+          .catch((error) => console.error("Error!", error.message));
       });
     </script>
   </body>
