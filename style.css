@@ -1,0 +1,54 @@
+body {
+  font-family: "Poppins", sans-serif !important;
+  background-color: #474f7a;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  transition: all 0.2s;
+}
+
+.nav-link:hover::after {
+  content: "";
+  height: 2px;
+  width: 100%;
+  background-color: #ffd0ec;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.jumbotron {
+  padding-top: 6rem;
+  background-color: #474f7a;
+  color: #ffffff;
+}
+
+hr {
+  width: 250px;
+  border-top: 3px solid #ffffff;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#about {
+  background-color: #818fb4;
+  color: #363062;
+}
+
+#projects {
+  background-color: #474f7a;
+  color: #ffffff;
+}
+
+#contact {
+  background-color: #818fb4;
+  color: #363062;
+}
+
+section {
+  padding-top: 5rem;
+}
